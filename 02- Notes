@@ -1,0 +1,30 @@
+Diferenças entre container e imagem: 
+
+-> Fazendo um paralelo com P.O.O. a imagem seria equivalente a classe e o container seria o objeto;
+-> Uma imagem é um modelo de sistema de arquivos somente de leitura formado em camadas, essas camadas uma vez montadas uma depois da outra forma o sistema de arquivo que vai ser usado pelo container e o container é o processo segregado, isolado que a partir desse processo podemos criar subprocessos e esse processo tem acesso a um sistema de arquivos montado à partir da imagem. 
+-> Container cria uma layer para permitir fazer suas operações
+
+Comandos básicos para gerenciamento de imagens:
+
+docker image pull <imagem do docker hub>
+
+docker image ls (listando as imagens obtidas)
+
+docker image rm <image> (deleta uma imagem)
+
+docker image inspect <image> (listar várias características da imagem baixada)
+
+docker image tag <original-image> <tag-for-image> 
+-> Na prática são ponteiros para imagens previamente já criadas. 
+
+docker image build <file> (pega um arquivo descritor do docker ele interpreta o arquivo e constrói a imagem.)
+
+docker image push <image> (uma vez que você cria uma imagem podemos publicar num registry local ou no registry do docker-hub)
+
+Docker Hub x Docker Registry
+
+Docker Registry: É um serviço server-side para registro e obtenção de imagems, é um serviço que disponibiliza uma API para que você possa enviar imagens ou resgatar/obter imagens a partir dele. Podemos ter um registry privado dentro de um servidor local para imagens específicas.
+
+Docker Hub: É um SaaS (Software as a service) é um produto na nuvem, e dentro dele tem um registry que permite registrar suas imagens e baixá-las, possui interface gráfica.
+-> Possui imagens oficiais geradas pelo próprio time do docker. 
+
