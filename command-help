@@ -1,0 +1,111 @@
+# Status
+sudo service docker status
+# Start
+sudo service docker start
+
+1. Check ownership for the Docker Unix socket:
+
+sudo ls -la /var/run/docker.sock
+
+2. If necessary, grant the user ownership with:
+
+sudo chown [username]:docker /var/run/docker.sock
+
+3. Hello World 
+
+sudo docker run hello-world
+
+4. Rodar um container debian e executar o comando bash --version
+
+docker container run debian bash --version
+
+5. Exibir Containers criados Comandos executados e status
+
+docker container ps -a
+
+6. Criar container mas apagar ele logo após sua criação
+
+docker container run --rm debian bash --version
+
+7. Criar container  e entrar no bash dele em modo iterativo
+
+docker container run -it debian bash
+
+Para fins de testes para provar como o docker tem seus containers totalmente desacoplados criamos um arquivo touch.txt dentro desse container e depois saímos dele.
+
+ao executar um novo container iterativo é possível perceber que esse arquivo não existe no container novo.
+
+8. Nomear containers 
+
+docker container run --name mydeb -it debian bash   
+
+(Depois que ele cria um container com um nome específico, não é possível criar outro container com o mesmo nome utilizando o comando `run`)
+
+9. Reutilizar containers
+
+docker container start -ai mydeb (-a = access e -i = iterative)
+
+10. Mapear portas dos containers
+
+docker container run -p 8080:80 nginx
+
+-> para visualizar podemos listar os containers ativos com `docker container ps` e veremos que iniciamos o container respectivo.
+
+11. Mapear diretórios para containers
+
+setup: Criar uma pasta localmente com um arquivo html para testar, a partir disso podemos mapear utilizando o comando
+
+docker container run -p 8080:80 -v $(pwd)/html:/usr/share/nginx/html nginx
+
+-v é uma opção que gerencia volumes do container criado com a máquina de usuário. Dessa forma ele fez uma comunicação do container com o mundo exterior.
+
+12. Rodar um servidor web em background
+
+docker container run -d --name ex-daemon-basic -p 8080:80 -v $(pwd)/html:/usr/share/nginx/html nginx
+
+ID do container executando
+0df111359fbe2a8c5915561c0ca46ffe71a09eac199da11615624d188543c977
+
+Gerenciamentos:
+
+-> para visualizar o container executando
+
+docker container ps
+
+-> para parar o container que está sendo executado 
+
+docker container stop <nome-ou-id-do-container>
+
+-> para inicializar um container já inicializado
+
+docker container start <nome-ou-id-do-container>
+
+-> para dar restart em um container 
+
+docker container restart <nome-ou-id-do-container>
+
+13. Manipulação de containers em modo daemon
+
+docker container ls/list/ps -a (Lista todos os containers já criados)
+
+-> para exibir os logs do container
+
+docker container logs <nome-ou-id-do-container>
+
+-> para listar em formato json características do container
+
+docker container inspect <nome-ou-id-do-container>
+
+-> para saber o tipo de sistema que está sendo executado dentro do container 
+
+docker container exec <nome-ou-id-do-container> uname -or
+
+14. Mais comandos 
+
+lista
+
+docker container/image/volume ls
+
+deletar
+
+docker <container/image/volume> rm <id-ou-nome-container/image/volume>
