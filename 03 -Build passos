@@ -1,0 +1,44 @@
+Criar um diretório com um arquivo Dockerfile (primeiro-build/Dockerfile)
+
+docker image build -t <nome-da-imagem> <pasta local>
+
+docker image build -t ex-simple-build .
+
+veremos que a imagem foi criada:
+
+docker image ls
+
+REPOSITORY        TAG       IMAGE ID       CREATED         SIZE
+ex-simple-build   latest    a8474c3d6670   9 seconds ago   142MB
+nginx             latest    55f4b40fe486   11 days ago     142MB
+debian            latest    d2780094a226   11 days ago     124MB
+hello-world       latest    feb5d9fea6a5   9 months ago    13.3kB
+
+podemos agora executar um container a partir dessa imagem criada
+
+docker container run -p 80:80 ex-simple-build
+
+Build com argumentos:
+
+ex /build-com-arg
+
+docker image build -t ex-build-arg .
+
+docker container run ex-build-arg bash -c 'echo $S3_BUCKET'
+-> files
+
+se construímos a imagem dessa forma 
+
+docker image build --build-arg S3_BUCKET=myapp -t ex-build-arg .
+
+estamos 'setando' o valor do argumento na construção da imagem
+
+logo quando rodarmos um container desta imagem teremos:
+
+docker container run ex-build-arg bash -c 'echo $S3_BUCKET'
+-> myapp
+
+para inspecionar o maintainer da imagem conseguimos aplicar um filtro na inspeção da mesma 
+
+docker image inspect --format="{{index .Config.Labels \"maintainer\"}}" ex-build-arg
+-> Aluno cod3r <aluno at cod3r.com.br>
