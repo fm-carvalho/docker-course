@@ -1,0 +1,15 @@
+Exemplo prático para rodar um servidor no container e escutar
+
+/build-dev/run.py é o código do servidor
+/build-dev/index.html é o html que acessaremos localmente
+/build-dev/Dockerfile são as instruções para criação da imagem
+
+rodando em /build-dev ...
+sudo docker image build -t ex-build-dev .
+
+agora rodando o container em /build-dev
+
+docker container run -it -v $(pwd):/app -p 80:8000 --name python-server ex-build-dev
+
+aqui mapeamos nossa aplicação para o diretório /app da imagem 
+e também fazemos o mapeamento da porta 80:8000
